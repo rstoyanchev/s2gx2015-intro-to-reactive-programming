@@ -1,0 +1,1 @@
+This repository contains source code for the ["Intro to Reactive Programming"](https://2015.event.springone2gx.com/schedule/sessions/introduction_to_reactive_programming.html) talk at SpringOne 2GX 2015.
