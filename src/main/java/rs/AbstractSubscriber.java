@@ -11,7 +11,7 @@ public abstract class AbstractSubscriber<T> implements Subscriber<T> {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 
-	private final RequestStrategy requestStrategy;
+	private final DemandStrategy demandStrategy;
 
 	private Subscription subscription;
 
@@ -20,13 +20,13 @@ public abstract class AbstractSubscriber<T> implements Subscriber<T> {
 		this(null);
 	}
 
-	protected AbstractSubscriber(RequestStrategy requestStrategy) {
-		this.requestStrategy = requestStrategy;
+	protected AbstractSubscriber(DemandStrategy demandStrategy) {
+		this.demandStrategy = demandStrategy;
 	}
 
 
-	protected RequestStrategy getRequestStrategy() {
-		return this.requestStrategy;
+	protected DemandStrategy getDemandStrategy() {
+		return this.demandStrategy;
 	}
 
 	protected Subscription getSubscription() {
@@ -62,7 +62,7 @@ public abstract class AbstractSubscriber<T> implements Subscriber<T> {
 	}
 
 	protected long getDemandOnSubscribe() {
-		return (getRequestStrategy() != null ? getRequestStrategy().getInitialDemand() : 0);
+		return (getDemandStrategy() != null ? getDemandStrategy().getInitialDemand() : 0);
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public abstract class AbstractSubscriber<T> implements Subscriber<T> {
 	}
 
 	protected long getDemandOnNext(T data) {
-		return (getRequestStrategy() != null ? getRequestStrategy().getDemand(data) : 0);
+		return (getDemandStrategy() != null ? getDemandStrategy().getDemand(data) : 0);
 	}
 
 	@Override
@@ -101,10 +101,10 @@ public abstract class AbstractSubscriber<T> implements Subscriber<T> {
 	@Override
 	public void onComplete() {
 		logger.debug("onComplete");
-		handleComplete();
+		handleCompletion();
 	}
 
-	protected void handleComplete() {
+	protected void handleCompletion() {
 	}
 
 }

@@ -1,14 +1,14 @@
 package rs;
 
 
-public class BoundedRequestStrategy extends SimpleRequestStrategy {
+public class BoundedDemandStrategy extends SimpleDemandStrategy {
 
 	private final long maxItems;
 
 	private volatile long itemCount;
 
 
-	public BoundedRequestStrategy(long initialDemand, long maxItems) {
+	public BoundedDemandStrategy(long initialDemand, long maxItems) {
 		super(initialDemand);
 		this.maxItems = maxItems;
 	}

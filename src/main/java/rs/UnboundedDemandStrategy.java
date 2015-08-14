@@ -1,7 +1,7 @@
 package rs;
 
 
-public final class UnboundedRequestStrategy implements RequestStrategy {
+public final class UnboundedDemandStrategy implements DemandStrategy {
 
 
 	@Override

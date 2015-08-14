@@ -5,44 +5,44 @@ import java.util.function.Consumer;
 
 public class FunctionalSubscriber<T> extends AbstractSubscriber<T> {
 
-	private final Consumer<T> dataConsumer;
+	private final Consumer<T> dataCallback;
 
-	private final Consumer<Throwable> errorConsumer;
+	private final Consumer<Throwable> errorCallback;
 
-	private final Runnable completionTask;
+	private final Consumer<Void> completionCallback;
 
 
 	/**
-	 * Protected constructor. Use {@link SubscriberFactory}.
+	 * Protected constructor. Use {@link Subscribers}.
 	 */
-	protected FunctionalSubscriber(RequestStrategy requestStrategy, Consumer<T> consumer,
-			Consumer<Throwable> errorConsumer, Runnable completionTask) {
+	protected FunctionalSubscriber(DemandStrategy demandStrategy, Consumer<T> dataCallback,
+			Consumer<Throwable> errorCallback, Consumer<Void> completionCallback) {
 
-		super(requestStrategy);
-		this.dataConsumer = consumer;
-		this.errorConsumer = errorConsumer;
-		this.completionTask = completionTask;
+		super(demandStrategy);
+		this.dataCallback = dataCallback;
+		this.errorCallback = errorCallback;
+		this.completionCallback = completionCallback;
 	}
 
 
 	@Override
 	protected void handleData(T data) {
-		if (this.dataConsumer != null) {
-			this.dataConsumer.accept(data);
+		if (this.dataCallback != null) {
+			this.dataCallback.accept(data);
 		}
 	}
 
 	@Override
 	protected void handleError(Throwable error) {
-		if (this.errorConsumer != null) {
-			this.errorConsumer.accept(error);
+		if (this.errorCallback != null) {
+			this.errorCallback.accept(error);
 		}
 	}
 
 	@Override
-	protected void handleComplete() {
-		if (this.completionTask != null) {
-			this.completionTask.run();
+	protected void handleCompletion() {
+		if (this.completionCallback != null) {
+			this.completionCallback.accept(null);
 		}
 	}
 

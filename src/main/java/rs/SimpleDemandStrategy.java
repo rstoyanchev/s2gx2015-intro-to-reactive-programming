@@ -1,16 +1,16 @@
 package rs;
 
 
-public class SimpleRequestStrategy implements RequestStrategy {
+public class SimpleDemandStrategy implements DemandStrategy {
 
 	private final long initialDemand;
 
 
-	public SimpleRequestStrategy() {
+	public SimpleDemandStrategy() {
 		this(1);
 	}
 
-	public SimpleRequestStrategy(long initialDemand) {
+	public SimpleDemandStrategy(long initialDemand) {
 		this.initialDemand = initialDemand;
 	}
 

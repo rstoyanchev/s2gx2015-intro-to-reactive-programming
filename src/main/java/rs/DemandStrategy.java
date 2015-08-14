@@ -3,7 +3,7 @@ package rs;
 import org.reactivestreams.Subscription;
 
 
-public interface RequestStrategy {
+public interface DemandStrategy {
 
 	/**
 	 * How much demand should be requested initially.

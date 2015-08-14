@@ -6,7 +6,7 @@ import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.reactivestreams.PublisherFactory;
-import rs.SubscriberFactory;
+import rs.Subscribers;
 
 public class Demo1 {
 
@@ -22,7 +22,7 @@ public class Demo1 {
 			}
 		}, subscriber -> new AtomicInteger(0));
 
-		publisher.subscribe(SubscriberFactory.bounded(1, 50, data -> {
+		publisher.subscribe(Subscribers.simple(data -> {
 			// do something
 		}));
 	}
