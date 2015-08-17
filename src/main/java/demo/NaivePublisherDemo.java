@@ -20,7 +20,7 @@ public class NaivePublisherDemo {
 	}
 
 
-	private static class NaiveSingleItemPublisher<T> implements Publisher<T> {
+	public static class NaiveSingleItemPublisher<T> implements Publisher<T> {
 
 		private final T item;
 
@@ -52,7 +52,7 @@ public class NaivePublisherDemo {
 	// What if onNext throws an Exception?
 	// Ensure single call to either onError or onComplete
 
-	private static class NaiveMultiItemPublisher<T> implements Publisher<T> {
+	public static class NaiveMultiItemPublisher<T> implements Publisher<T> {
 
 		private final List<T> items;
 
