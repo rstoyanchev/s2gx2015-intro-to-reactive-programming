@@ -36,18 +36,6 @@ public class NaivePublisherVerification  extends PublisherVerification<Integer> 
 
     @Override
     public Publisher<Integer> createFailedPublisher() {
-        return s -> {
-            s.onSubscribe(new Subscription() {
-                @Override
-                public void request(long n) {
-                }
-
-                @Override
-                public void cancel() {
-                }
-            });
-            s.onError(new Exception("test"));
-
-        };
+        throw new SkipException("Not implemented");
     }
 }
