@@ -1,36 +1,26 @@
-package demo.tck;
+package demo;
 
-import demo.NaivePublisherDemo;
 import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscription;
 import org.reactivestreams.tck.PublisherVerification;
 import org.reactivestreams.tck.TestEnvironment;
 import org.testng.SkipException;
 
-/**
- * @author Stephane Maldini
- */
 public class NaivePublisherVerification  extends PublisherVerification<Integer> {
 
-        public NaivePublisherVerification() {
-            super(new TestEnvironment(2000, true), 3500);
-        }
+
+    public NaivePublisherVerification() {
+        super(new TestEnvironment(2000, true), 3500);
+    }
+
 
     @Override
     public Publisher<Integer> createPublisher(long elements) {
 
-        if(elements > 100L)
+        if(elements > 100L) {
             throw new SkipException("Large Publisher Not implemented");
-
-        int size = (int)elements;
-        Integer[] datasource = new Integer[size];
-
-        for(int i = 0; i < size; i++){
-            datasource[i] = i;
         }
 
-
-        return new NaivePublisherDemo.NaiveMultiItemPublisher(datasource);
+        return RsBackpressureDemo.createNaivePublisher(elements);
     }
 
 
@@ -38,4 +28,5 @@ public class NaivePublisherVerification  extends PublisherVerification<Integer> 
     public Publisher<Integer> createFailedPublisher() {
         throw new SkipException("Not implemented");
     }
+
 }
