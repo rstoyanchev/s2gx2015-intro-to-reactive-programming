@@ -9,7 +9,7 @@ public class PublisherFactoryVerification extends PublisherVerification<Integer>
 
 
     public PublisherFactoryVerification() {
-        super(new TestEnvironment(2000, true), 3500);
+        super(new TestEnvironment(500, true));
     }
 
 

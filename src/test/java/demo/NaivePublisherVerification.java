@@ -9,7 +9,7 @@ public class NaivePublisherVerification  extends PublisherVerification<Integer> 
 
 
     public NaivePublisherVerification() {
-        super(new TestEnvironment(2000, true), 3500);
+        super(new TestEnvironment(500, true));
     }
 
 

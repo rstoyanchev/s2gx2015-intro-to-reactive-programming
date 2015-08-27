@@ -15,7 +15,7 @@ public class RxObservableVerification extends PublisherVerification<Integer> {
 
 
     public RxObservableVerification() {
-        super(new TestEnvironment(2000, true), 3500);
+        super(new TestEnvironment(500, true));
     }
 
 
