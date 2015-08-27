@@ -26,15 +26,14 @@ public class RxObservableVerification extends PublisherVerification<Integer> {
             throw new SkipException("Large Publisher Not implemented");
         }
 
-        List<Integer> items = initIntSequence(10);
-        Observable<Integer> observable = Observable.from(items);
+        Observable<Integer> observable = Observable.range(1, (int) elementCount);
 
         return RxReactiveStreams.toPublisher(observable);
     }
 
     @Override
     public Publisher<Integer> createFailedPublisher() {
-        return null;
+        return RxReactiveStreams.toPublisher(Observable.<Integer>error(new Exception()));
     }
 
 }
