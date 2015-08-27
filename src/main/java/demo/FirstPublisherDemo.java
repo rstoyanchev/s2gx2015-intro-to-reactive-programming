@@ -15,11 +15,24 @@ public class FirstPublisherDemo {
 
 	public static void main(String[] args) {
 
+		// createNaivePublisher, 10 items (ok!)
+
 		createNaivePublisher(10).subscribe(createSubscriber());
 
-		// ...
+		// src/test/java -> NaivePublisherVerification (fail!)
+
+		// src/test/java -> PublisherFactoryVerification (ok!)
+
+		// see createWithPublisherFactory
+
+		// back-pressure: experiment w/ request(n) in createSubscriber...
+
+		// createNaivePublisher, 10000 items (StackOverflow!)
+
+		// createWithPublisherFactory, 10000 items (ok!)
 
 	}
+
 
 	static Publisher<Integer> createNaivePublisher(long itemCount) {
 
@@ -71,7 +84,7 @@ public class FirstPublisherDemo {
 
 	private static List<Integer> initIntSequence(long itemCount) {
 		List<Integer> items = new ArrayList<>();
-		for(int i = 0; i < itemCount ; i++){
+		for(int i = 1; i <= itemCount ; i++){
 			items.add(i);
 		}
 		return items;
