@@ -16,12 +16,13 @@ public class FirstObservableDemo {
 
 		// Observable, 10 items
 
-//		Observable.from(items).subscribe(System.out::println);
-		Observable.range(1, (int) 1).subscribe(System.out::println);
-
-		// back-pressure: experiment with request(n) in createSubscriber
+		Observable.from(items).subscribe(System.out::println);
 
 		// src/test/java -> RxObservableVerification
+
+		// log demand with doOnRequest
+
+		// back-pressure: experiment with request(n) in createSubscriber
 
 		// Observable, 10000 items
 
