@@ -14,13 +14,19 @@ public class FirstObservableDemo {
 
 		List<Integer> items = initIntSequence(10);
 
+		// Observable, 10 items
+
 		Observable.from(items).subscribe(System.out::println);
 
-//		Observable.from(items).subscribe(createSubscriber());
+		// back-pressure: experiment with request(n) in createSubscriber
+
+		// src/test/java -> RxObservableVerification
+
+		// Observable, 10000 items
 
 	}
 
-	private static List<Integer> initIntSequence(long itemCount) {
+	static List<Integer> initIntSequence(long itemCount) {
 		List<Integer> items = new ArrayList<>();
 		for(int i = 1; i <= itemCount ; i++){
 			items.add(i);
