@@ -1,5 +1,6 @@
 package demo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.reactivestreams.Publisher;
@@ -8,8 +9,6 @@ import org.reactivestreams.tck.TestEnvironment;
 import org.testng.SkipException;
 import rx.Observable;
 import rx.RxReactiveStreams;
-
-import static demo.FirstObservableDemo.initIntSequence;
 
 public class RxObservableVerification extends PublisherVerification<Integer> {
 
@@ -26,14 +25,25 @@ public class RxObservableVerification extends PublisherVerification<Integer> {
             throw new SkipException("Large Publisher Not implemented");
         }
 
-        Observable<Integer> observable = Observable.range(1, (int) elementCount);
+        List<Integer> items = new ArrayList<>();
+        for(int i = 1; i <= elementCount ; i++){
+            items.add(i);
+        }
 
-        return RxReactiveStreams.toPublisher(observable);
+        return RxReactiveStreams.toPublisher(Observable.from(items));
     }
 
     @Override
     public Publisher<Integer> createFailedPublisher() {
-        return RxReactiveStreams.toPublisher(Observable.<Integer>error(new Exception()));
+
+        // Null because we always successfully subscribe.
+        // If the observable is in error state, it will subscribe and then emit the error as the first item
+        // This is not an “error state” publisher as defined by RS
+
+        // Source for above comment:
+        // https://github.com/ReactiveX/RxJavaReactiveStreams/blob/d581cdf1768db20c8f81a6661c71bc68b860f51b/rxjava-reactive-streams/src/test/java/rx/reactivestreams/TckSynchronousPublisherTest.java#L41-L44
+
+        return null;
     }
 
 }

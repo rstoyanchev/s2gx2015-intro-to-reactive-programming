@@ -16,7 +16,8 @@ public class FirstObservableDemo {
 
 		// Observable, 10 items
 
-		Observable.from(items).subscribe(System.out::println);
+//		Observable.from(items).subscribe(System.out::println);
+		Observable.range(1, (int) 1).subscribe(System.out::println);
 
 		// back-pressure: experiment with request(n) in createSubscriber
 
@@ -26,7 +27,7 @@ public class FirstObservableDemo {
 
 	}
 
-	static List<Integer> initIntSequence(long itemCount) {
+	private static List<Integer> initIntSequence(long itemCount) {
 		List<Integer> items = new ArrayList<>();
 		for(int i = 1; i <= itemCount ; i++){
 			items.add(i);
@@ -34,6 +35,7 @@ public class FirstObservableDemo {
 		return items;
 	}
 
+	@SuppressWarnings("unused")
 	private static Subscriber<Integer> createSubscriber() {
 
 		return new Subscriber<Integer>() {
@@ -61,6 +63,6 @@ public class FirstObservableDemo {
 				System.out.println("onComplete");
 			}
 		};
-	};
+	}
 
 }
