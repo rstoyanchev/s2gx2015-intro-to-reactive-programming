@@ -14,13 +14,13 @@ public class PublisherFactoryVerification extends PublisherVerification<Integer>
 
 
     @Override
-    public Publisher<Integer> createPublisher(long elements) {
+    public Publisher<Integer> createPublisher(long elementCount) {
 
-        if(elements > 100L) {
+        if(elementCount > 100L) {
             throw new SkipException("Large Publisher Not implemented");
         }
 
-        return RsBackpressureDemo.createPublisher(elements);
+        return FirstPublisherDemo.createWithPublisherFactory(elementCount);
     }
 
     @Override
