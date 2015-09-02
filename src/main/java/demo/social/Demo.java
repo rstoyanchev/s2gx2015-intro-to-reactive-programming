@@ -10,54 +10,52 @@ import rx.Observable;
 
 public class Demo {
 
-	private static final TestTwitterService twitter = new TestTwitterService();
+	private static final TestTwitterService twitterService = new TestTwitterService();
 
-	private static final TestFacebookService facebook = new TestFacebookService();
+	private static final TestFacebookService facebookService = new TestFacebookService();
 
-	private static final TestLinkedInService linkedIn = new TestLinkedInService();
+	private static final TestLinkedInService linkedInService = new TestLinkedInService();
 
 
 	static {
-		twitter.add("jdenham", "Mongtomery AL");
-		twitter.add("josorio", "Huntington NY");
-		twitter.add("cfeliciano", "San Diago CA");
-		twitter.add("moden", "Detroit MI");
-		twitter.add("lconrad", "Portland OR");
+		twitterService.add("jdenham", "Mongtomery AL");
+		twitterService.add("josorio", "Huntington NY");
+		twitterService.add("cfeliciano", "San Diago CA");
+		twitterService.add("moden", "Detroit MI");
+		twitterService.add("lconrad", "Portland OR");
 
-		facebook.add("jdenham", "Janelle Denham", "Pop culture lover. Wannabe coffee expert. Beer ninja. Passionate internet aficionado. Introvert.");
-		facebook.add("josorio", "Justina Osorio", "Freelance communicator. Web maven. Internet specialist. Bacon expert. Falls down a lot. Student. Twitter ninja. Avid food advocate.");
-		facebook.add("cfeliciano", "Clemmie Feliciano", "Music geek. Friendly writer. Prone to fits of apathy. Extreme travel enthusiast. Organizer.");
-		facebook.add("moden", "Major Oden", "Passionate web scholar. Prone to fits of apathy. Twitter fanatic. Proud troublemaker. General bacon aficionado.");
-		facebook.add("lconrad", "Lamonica Conrad", "Incurable webaholic. Hardcore organizer. Wannabe music maven. Friendly tv expert. Gamer. Unapologetic beer evangelist. Internet fan.");
+		facebookService.add("jdenham", "Janelle Denham", "Pop culture lover. Wannabe coffee expert. Beer ninja. Passionate internet aficionado. Introvert.");
+		facebookService.add("josorio", "Justina Osorio", "Freelance communicator. Web maven. Internet specialist. Bacon expert. Falls down a lot. Student. Twitter ninja. Avid food advocate.");
+		facebookService.add("cfeliciano", "Clemmie Feliciano", "Music geek. Friendly writer. Prone to fits of apathy. Extreme travel enthusiast. Organizer.");
+		facebookService.add("moden", "Major Oden", "Passionate web scholar. Prone to fits of apathy. Twitter fanatic. Proud troublemaker. General bacon aficionado.");
+		facebookService.add("lconrad", "Lamonica Conrad", "Incurable webaholic. Hardcore organizer. Wannabe music maven. Friendly tv expert. Gamer. Unapologetic beer evangelist. Internet fan.");
 
-		linkedIn.add("tina_nelson", new LinkedInProfile("jannel_denham", "jdenham", "jdenham"));
-		linkedIn.add("tina_nelson", new LinkedInProfile("justina_osorio", "josorio", "josorio"));
-		linkedIn.add("tina_nelson", new LinkedInProfile("clemmie_feliciano", "cfeliciano", "cfeliciano"));
-		linkedIn.add("tina_nelson", new LinkedInProfile("major_oden", "moden", "moden"));
-		linkedIn.add("tina_nelson", new LinkedInProfile("lamonica_conrad", "lconrad", "lconrad"));
+		linkedInService.add("tina_nelson", new LinkedInProfile("jannel_denham", "jdenham", "jdenham"));
+		linkedInService.add("tina_nelson", new LinkedInProfile("justina_osorio", "josorio", "josorio"));
+		linkedInService.add("tina_nelson", new LinkedInProfile("clemmie_feliciano", "cfeliciano", "cfeliciano"));
+		linkedInService.add("tina_nelson", new LinkedInProfile("major_oden", "moden", "moden"));
+		linkedInService.add("tina_nelson", new LinkedInProfile("lamonica_conrad", "lconrad", "lconrad"));
 	}
 
 
 	public static void main(String[] args) {
 
-		linkedIn.findUsers("reactive")
-				.take(5)
-				.flatMap(userName ->
-						linkedIn.getConnections(userName)
-								.take(3)
-								.flatMap(linkedInConnection -> {
+		linkedInService.findUsers("reactive").take(5).flatMap(userName ->
 
-									String twitterId = linkedInConnection.getTwitterId();
-									Observable<TwitterProfile> connTwitter = twitter.getUserProfile(twitterId);
+				linkedInService.getConnections(userName).take(3).flatMap(connection -> {
 
-									String facebookId = linkedInConnection.getFacebookId();
-									Observable<FacebookProfile> connFacebook = facebook.getUserProfile(facebookId);
+					String id = connection.getTwitterId();
+					Observable<TwitterProfile> twitterProfile = twitterService.getUserProfile(id);
 
-									return Observable.zip(connTwitter, connFacebook, (t, f) ->
-											new UserConnectionInfo(userName, linkedInConnection, t, f));
+					id = connection.getFacebookId();
+					Observable<FacebookProfile> facebookProfile = facebookService.getUserProfile(id);
 
-								}))
-				.subscribe(System.out::println);
+					return Observable.zip(twitterProfile, facebookProfile, (tp, fp) ->
+							new UserConnectionInfo(userName, connection, tp, fp));
+
+				})
+		)
+		.subscribe(System.out::println);
 	}
 
 
