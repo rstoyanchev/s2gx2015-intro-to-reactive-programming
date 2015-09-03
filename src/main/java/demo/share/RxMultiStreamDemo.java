@@ -36,7 +36,7 @@ public class RxMultiStreamDemo {
 
 		observable.subscribe(n -> logger.debug("\t A[{}]", n));
 
-		// 2nd subscribe 5 seconds later (try with and without this line...)
+		// 2nd subscriber starts 5 seconds later to emphasize independent streams
 		sleep(5);
 
 		observable.subscribe(n -> logger.debug("\t\t\t B[{}]", n));

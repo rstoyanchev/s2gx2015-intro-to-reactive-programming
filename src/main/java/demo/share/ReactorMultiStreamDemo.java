@@ -39,6 +39,7 @@ public class ReactorMultiStreamDemo {
 
 		stream.consume(n -> logger.debug("\t A[{}]", n));
 
+		// 2nd subscriber starts 5 seconds later to emphasize independent streams
 		sleep(5);
 
 		stream.consume(n -> logger.debug("\t\t\t B[{}]", n));

@@ -36,7 +36,7 @@ public class RxSharedStreamDemo {
 
 		observable.subscribe(n -> logger.debug("\t A[{}]", n));
 
-		// 2nd subscribe 5 seconds later (try with and without this line...)
+		// 2nd subscriber will miss a few events (try with and without this line...)
 		sleep(5);
 
 		observable.subscribe(n -> logger.debug("\t\t\t B[{}]", n));

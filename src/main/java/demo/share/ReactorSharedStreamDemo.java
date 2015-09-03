@@ -40,6 +40,7 @@ public class ReactorSharedStreamDemo {
 
 		stream.consume(n -> logger.debug("\t A[{}]", n));
 
+		// 2nd subscriber will miss a few events (try with and without this line...)
 		sleep(5);
 
 		stream.consume(n -> logger.debug("\t\t\t B[{}]", n));
