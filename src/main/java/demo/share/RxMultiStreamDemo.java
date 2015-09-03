@@ -22,14 +22,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rx.Observable;
 
-
 /**
- * Each Subscriber in its own pipeline by default.
- *
+ * Each subscriber with independent stream.
  */
-public class MultiStreamDemo {
+public class RxMultiStreamDemo {
 
-	private static Logger logger = LoggerFactory.getLogger(MultiStreamDemo.class);
+	private static Logger logger = LoggerFactory.getLogger(RxMultiStreamDemo.class);
 
 
 	public static void main(String[] args) throws IOException {
@@ -39,7 +37,7 @@ public class MultiStreamDemo {
 		observable.subscribe(n -> logger.debug("\t A[{}]", n));
 
 		// 2nd subscribe 5 seconds later (try with and without this line...)
-		sleep(5000);
+		sleep(5);
 
 		observable.subscribe(n -> logger.debug("\t\t\t B[{}]", n));
 
@@ -47,9 +45,9 @@ public class MultiStreamDemo {
 
 	}
 
-	private static void sleep(long millis) {
+	private static void sleep(long seconds) {
 		try {
-			Thread.sleep(millis);
+			Thread.sleep(seconds * 1000);
 		}
 		catch (InterruptedException e) {
 			logger.debug("Interrupted...");

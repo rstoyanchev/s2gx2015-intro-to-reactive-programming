@@ -16,37 +16,32 @@
 package demo.share;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import rx.Observable;
-
+import reactor.Environment;
+import reactor.core.processor.RingBufferWorkProcessor;
+import reactor.rx.Stream;
+import reactor.rx.Streams;
 
 /**
- * Subscribers can share data pipeline.
+ * Shared stream with point-to-point, i.e. each element to one subscriber only.
  */
-public class SharedStreamDemo {
+public class ReactorDistributingSharedStreamDemo {
 
-	private static Logger logger = LoggerFactory.getLogger(SharedStreamDemo.class);
+	private static Logger logger = LoggerFactory.getLogger(ReactorDistributingSharedStreamDemo.class);
 
 
 	public static void main(String[] args) throws IOException {
 
-		Observable<Long> observable = Observable.interval(1, TimeUnit.SECONDS).share();
+		Environment.initialize();
 
-		observable.subscribe(n -> logger.debug("\t A[{}]", n));
+		Stream<Long> stream = Streams.period(1).process(RingBufferWorkProcessor.create());;
 
-		// 2nd subscribe 5 seconds later (try with and without this line...)
-		sleep(5000);
-
-		observable.subscribe(n -> logger.debug("\t\t\t B[{}]", n));
+		stream.consume(n -> logger.debug("\t A[{}]", n));
+		stream.consume(n -> logger.debug("\t\t\t B[{}]", n));
 
 		System.in.read();
-
-		// Slow consumer: add sleep(500) in action of 2nd subscriber
-
-		// Decouple slow consumer: add observeOn(Schedulers.computation() before subscribe
 
 	}
 

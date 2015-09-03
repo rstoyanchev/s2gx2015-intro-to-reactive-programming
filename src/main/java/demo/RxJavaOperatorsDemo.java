@@ -1,6 +1,7 @@
 package demo;
 
 import java.lang.reflect.Method;
+
 import rx.Observable;
 
 public class RxJavaOperatorsDemo {
