@@ -8,7 +8,7 @@ public class RxJavaOperatorsDemo {
 
 	public static void main(String[] args) {
 
-		// RxJava:
+		System.out.println("\n\nRxJava operators:");
 
 		Observable.from(Observable.class.getMethods())
 				.filter(m -> Observable.class.isAssignableFrom(m.getReturnType()))
@@ -17,14 +17,14 @@ public class RxJavaOperatorsDemo {
 				.toSortedList()
 				.forEach(System.out::println);
 
-		// Java 8 Stream:
+		System.out.println("\n\nRxJava operators via Java 8 Stream:");
 
 		java.util.stream.Stream.of(Observable.class.getMethods())
 				.filter(m -> Observable.class.isAssignableFrom(m.getReturnType()))
 				.map(Method::getName)
 				.distinct()
 				.sorted()
-				.forEach(System.out::println);
+				.forEach(s -> System.out.print(s + "  "));
 	}
 
 }

@@ -24,14 +24,6 @@ public class FirstReactorStreamDemo {
 
 		// log() + consumeLater() .. control.requestMore()
 
-		// Reactor Stream:
-
-		Streams.from(Stream.class.getMethods())
-		  .filter(m -> Stream.class.isAssignableFrom(m.getReturnType()))
-		  .map(Method::getName)
-		  .distinct()
-		  .sort()
-		  .consume(System.out::println);
 	}
 
 
